@@ -18,3 +18,6 @@ curl -X POST https://color-converter-three-omega.vercel.app/convert \
   -H "X-API-Key: your-api-key-here" \
   -d '{"input": "#ff0000", "from_format": "hex", "to_format": "rgb"}'
 ```
+
+## Postman
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://raw.githubusercontent.com/BT-Builds/color-converter/main/postman_collection.json)
