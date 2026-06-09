@@ -224,7 +224,7 @@ async def bulk_convert(req: BulkConvertRequest, api_key: str = Depends(verify_ap
             from_fmt = item.get("from_format")
             to_fmt = item.get("to_format")
             if not all([input_val, from_fmt, to_fmt]):
-                results.append({"input": item, "output": None, "error": "Missing required fields: input, from_format, to_format"})
+                results.append({"input": item.get("input"), "output": None, "error": "Missing required fields: input, from_format, to_format"})
                 continue
             output = convert_color(input_val, from_fmt, to_fmt)
             results.append({"input": input_val, "output": output, "error": None})
