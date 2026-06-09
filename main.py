@@ -100,6 +100,9 @@ class ColorConvertRequest(BaseModel):
     from_format: str
     to_format: str
 
+class BulkConvertRequest(BaseModel):
+    items: list
+
 def parse_hex(hex_val: str):
     hex_val = hex_val.lstrip("#")
     if len(hex_val) == 3:
@@ -206,6 +209,32 @@ async def convert(req: ColorConvertRequest, api_key: str = Depends(verify_api_ke
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/bulk/convert")
+async def bulk_convert(req: BulkConvertRequest, api_key: str = Depends(verify_api_key)):
+    check_rate_limit(api_key)
+    if len(req.items) > 1000:
+        raise HTTPException(status_code=400, detail="Maximum 1000 items per request")
+    
+    results = []
+    successful = 0
+    for item in req.items:
+        try:
+            input_val = item.get("input")
+            from_fmt = item.get("from_format")
+            to_fmt = item.get("to_format")
+            if not all([input_val, from_fmt, to_fmt]):
+                results.append({"input": item, "output": None, "error": "Missing required fields: input, from_format, to_format"})
+                continue
+            output = convert_color(input_val, from_fmt, to_fmt)
+            results.append({"input": input_val, "output": output, "error": None})
+            successful += 1
+        except ValueError as e:
+            results.append({"input": item.get("input"), "output": None, "error": str(e)})
+        except Exception as e:
+            results.append({"input": item.get("input"), "output": None, "error": str(e)})
+    
+    return {"results": results, "total": len(req.items), "successful": successful}
 
 @app.get("/random")
 async def random_color(api_key: str = Depends(verify_api_key)):
