@@ -81,6 +81,43 @@
       }
     },
     {
+      "name": "Bulk Convert",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "{{api_key}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/bulk/convert",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "bulk",
+            "convert"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"items\": 0\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
       "name": "Slug",
       "request": {
         "method": "POST",
@@ -108,6 +145,43 @@
         "body": {
           "mode": "raw",
           "raw": "{\n  \"color\": \"\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Bulk Slugify",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "{{api_key}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/bulk/slugify",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "bulk",
+            "slugify"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"items\": 0\n}",
           "options": {
             "raw": {
               "language": "json"
